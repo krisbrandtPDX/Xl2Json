@@ -24,12 +24,28 @@ namespace Xl2Json.Controllers
             return _xl.GetRows();
         }
 
+        // GET: api1/Rows
+        [HttpGet]
+        [Route("api1/Rows")]
+        public IEnumerable<Row> Get1()
+        {
+            return new Xl().GetRows();
+        }
+
         // GET: api/Rows/5
         [HttpGet("{id}")]
         [Route("api/Rows/{id}")]
         public Row Get(int id)
         {
             return _xl.GetRow(id);
+        }
+
+        // GET: api1/Rows/5
+        [HttpGet("{id}")]
+        [Route("api1/Rows/{id}")]
+        public Row Get1(int id)
+        {
+            return new Xl().GetRow(id);
         }
     }
 }

@@ -25,12 +25,28 @@ namespace Xl2Json.Controllers
             return _xl.GetBooks();
         }
 
+        // GET: api1/Books
+        [HttpGet]
+        [Route("api1/Books")]
+        public IEnumerable<Book> Get1()
+        {
+            return new Xl().GetBooks();
+        }
+
         // GET: api/Books/5
         [HttpGet]
         [Route("api/Books/{id}")]
         public Book Get(int id)
         {
             return _xl.GetBook(id);
+        }
+
+        // GET: api1/Books/5
+        [HttpGet]
+        [Route("api1/Books/{id}")]
+        public Book Get1(int id)
+        {
+            return new Xl().GetBook(id);
         }
 
     }

@@ -24,12 +24,28 @@ namespace Xl2Json.Controllers
             return _xl.GetSheets();
         }
 
+        // GET: api1/Sheets
+        [HttpGet]
+        [Route("api1/Sheets")]
+        public IEnumerable<Sheet> Ge1t()
+        {
+            return new Xl().GetSheets();
+        }
+
         // GET: api/Sheets/5
         [HttpGet("{id}")]
         [Route("api/Sheets/{id}")]
         public Sheet Get(int id)
         {
             return _xl.GetSheet(id);
+        }
+
+        // GET: api1/Sheets/5
+        [HttpGet("{id}")]
+        [Route("api1/Sheets/{id}")]
+        public Sheet Get1(int id)
+        {
+            return new Xl().GetSheet(id);
         }
     }
 }
