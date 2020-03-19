@@ -175,25 +175,12 @@ namespace Xl2Json
                     Id = id++,
                     SheetId = sheet.Id,
                     Index = row,
-                    Data = GetRowData(xlSheet, row++)
+                    Data = GetRowData(GetRowVals(xlSheet, 1), GetRowVals(xlSheet, row++))
                 };
                 rows.Add(r);
             }
             _xlBooks.Close();
             return rows;
-        }
-
-        //returns a dictionary object with key-value pairs for single row
-        private Dictionary<string, string> GetRowData(Microsoft.Office.Interop.Excel._Worksheet xlSheet, int row)
-        {
-            List<string> headers = GetRowVals(xlSheet, 1);
-            List<string> values = GetRowVals(xlSheet, row);
-            Dictionary<string, string> data = new Dictionary<string, string>();
-            for (int i = 0; i < headers.Count(); i++)
-            {
-                data.Add(headers[i], values[i]);
-            }
-            return data;
         }
 
         //get single row values, stored in a string list
@@ -207,6 +194,17 @@ namespace Xl2Json
                 cell = cell.Next;
             }
             return values;
+        }
+
+        //returns a dictionary object with key-value pairs for single row
+        private Dictionary<string, string> GetRowData(List<string> headers, List<string> values)
+        {
+            Dictionary<string, string> data = new Dictionary<string, string>();
+            for (int i = 0; i < headers.Count(); i++)
+            {
+                data.Add(headers[i], values[i]);
+            }
+            return data;
         }
 
         //return cell string name from row, col : (2,1) => "A2"
