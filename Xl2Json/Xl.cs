@@ -17,16 +17,20 @@ namespace Xl2Json
         private List<Sheet> _sheets = new List<Sheet>();
         private List<Row> _rows = new List<Row>();
 
-        public Xl()
+        public Xl(bool fetchData = false)
         {
             _xlApp = new Microsoft.Office.Interop.Excel.Application();
             _xlBooks = _xlApp.Workbooks;
+            if (fetchData)
+            {
+                SetRows();
+            }
         }
 
         #region "public methods"
 
         //get a list of available workbooks without sheet data
-        public List<Book> GetBooks()
+        public List<Book> GetBooks() 
         {
             SetBooks(XL_DIR);
             return _books;
@@ -45,6 +49,14 @@ namespace Xl2Json
         {
             SetSheets();
             return _sheets;
+        }
+
+        //get list of sheet objects for a specific workbook
+        public List<Sheet> GetSheets(int bookId)
+        {
+            SetSheets();
+            Book b = _books[bookId];
+            return b.Sheets;
         }
 
         //get a single sheet object with Row data
@@ -98,9 +110,9 @@ namespace Xl2Json
         //populate list of Sheet objects for all sheets in all workbooks in XL_DIR => sheets added without Rows
         private void SetSheets()
         {
-            SetBooks(XL_DIR);
             if (_sheets.Count() == 0)
             {
+                SetBooks(XL_DIR);
                 foreach (Book b in _books)
                 {
                     b.Sheets = GetSheets(b);
@@ -112,9 +124,9 @@ namespace Xl2Json
         //populate list of Row objects for all rows in all Sheets in all workbooks in XL_DIR 
         private void SetRows()
         {
-            SetSheets();
             if (_rows.Count() == 0)
             {
+                SetSheets();
                 foreach (Sheet s in _sheets)
                 {
                     s.Rows = GetRows(s);

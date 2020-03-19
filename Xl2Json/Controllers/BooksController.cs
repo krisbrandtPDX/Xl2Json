@@ -8,24 +8,30 @@ using Xl2Json.Models;
 
 namespace Xl2Json.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class BooksController : ControllerBase
     {
+        private readonly Xl _xl;
+        public BooksController(Xl xl)
+        {
+            _xl = xl;
+        }
+
         // GET: api/Books
         [HttpGet]
+        [Route("api/Books")]
         public IEnumerable<Book> Get()
         {
-            Xl xl = new Xl();
-            return xl.GetBooks();
+            return _xl.GetBooks();
         }
 
         // GET: api/Books/5
-        [HttpGet("{id}")]
+        [HttpGet]
+        [Route("api/Books/{id}")]
         public Book Get(int id)
         {
-            Xl xl = new Xl();
-            return xl.GetBook(id);
+            return _xl.GetBook(id);
         }
+
     }
 }
